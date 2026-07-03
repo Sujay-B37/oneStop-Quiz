@@ -1,0 +1,1102 @@
+{
+  "quizzes": [
+    {
+      "subject": "Math",
+      "topics": [
+        "Algebra",
+        "Linear Equations",
+        "One Variable Equations"
+      ],
+      "questions": [
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for x: x + 9 = 18",
+          "options": [
+            "X = 27",
+            "X = 9",
+            "X = -9"
+          ],
+          "correct_answer": "X = 9",
+          "explanation": "To solve the equation x + 9 = 18, subtract 9 from both sides of the equation, giving x = 9."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for x: 5x - 16 = 14 - 5x",
+          "options": [
+            "No solution",
+            "Identity",
+            "X = 3"
+          ],
+          "correct_answer": "X = 3",
+          "explanation": "Combine like terms and move all x terms to one side: 10x = 30. Dividing both sides by 10 gives x = 3."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for y: 3y + 5 = 11",
+          "options": [
+            "Y = 2",
+            "Y = -2",
+            "Y = 1/2",
+            "Y = -2/1"
+          ],
+          "correct_answer": "Y = 2",
+          "explanation": "Subtracting 5 from both sides gives 3y = 6. Dividing both sides by 3 gives y = 2."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for t: t - 2 = 6",
+          "options": [
+            "T = 4",
+            "T = 12",
+            "T = 8"
+          ],
+          "correct_answer": "T = 8",
+          "explanation": "Adding 2 to both sides of the equation gives t = 8."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for x: 34 + x = 10",
+          "options": [
+            "X = -24",
+            "X = 14",
+            "X = 44",
+            "X = 8"
+          ],
+          "correct_answer": "X = -24",
+          "explanation": "Subtracting 34 from both sides of the equation gives x = -24."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for y: y/7 = 12",
+          "options": [
+            "Y = 19",
+            "Y = 84",
+            "Y = 5",
+            "Y = -5"
+          ],
+          "correct_answer": "Y = 84",
+          "explanation": "Multiplying both sides by 7 gives y = 84."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for x: 11x - 21 = 17 - 8x",
+          "options": [
+            "X = 18",
+            "X = 2",
+            "X = 9"
+          ],
+          "correct_answer": "X = 2",
+          "explanation": "Rearranging gives 11x + 8x = 17 + 21, so 19x = 38. Dividing both sides by 19 gives x = 2."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for n: -4n = 24",
+          "options": [
+            "N = 28",
+            "N = -6",
+            "N = 6",
+            "N = 20"
+          ],
+          "correct_answer": "N = -6",
+          "explanation": "Dividing both sides of the equation by -4 gives n = -6."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for x: 10x = 110",
+          "options": [
+            "X = 10",
+            "X = 100",
+            "X = 11",
+            "X = 120"
+          ],
+          "correct_answer": "X = 11",
+          "explanation": "Dividing both sides of the equation by 10 gives x = 11."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for x to the nearest hundredth: 9.47x = 7.45x - 8.81",
+          "options": [
+            "X = -4.4",
+            "X = -4.36",
+            "X = -4.35"
+          ],
+          "correct_answer": "X = -4.36",
+          "explanation": "Subtracting 7.45x from both sides gives 1.02x = -8.81. Dividing both sides by 1.02 gives x is approximately -4.36."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for y: 15 - 2y = 3y",
+          "options": [
+            "Y = 3",
+            "Y = 15",
+            "Y = 15/6"
+          ],
+          "correct_answer": "Y = 3",
+          "explanation": "Simplifying the equation gives 15 = 5y. Dividing both sides by 5 gives y = 3."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for y: 7y = -56",
+          "options": [
+            "Y = 8",
+            "Y = 49",
+            "Y = -63",
+            "Y = -8"
+          ],
+          "correct_answer": "Y = -8",
+          "explanation": "Dividing both sides of the equation by 7 gives y = -8."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for x: x/2 = -5",
+          "options": [
+            "X = 3",
+            "X = 10",
+            "X = -10",
+            "X = 7"
+          ],
+          "correct_answer": "X = -10",
+          "explanation": "Multiplying both sides of the equation by 2 gives x = -10."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for d: 6 = d/5",
+          "options": [
+            "D = 30",
+            "D = 1",
+            "D = 11",
+            "D = 6/5"
+          ],
+          "correct_answer": "D = 30",
+          "explanation": "Multiplying both sides by 5 gives d = 30."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for n: n - 5 = -9",
+          "options": [
+            "N = 14",
+            "N = -4",
+            "N = -14",
+            "N = 45"
+          ],
+          "correct_answer": "N = -4",
+          "explanation": "Adding 5 to both sides of the equation gives n = -4."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for n: 48 = 11n + 26",
+          "options": [
+            "N = 2",
+            "N = -22",
+            "N = 48/11",
+            "N = 0"
+          ],
+          "correct_answer": "N = 2",
+          "explanation": "Subtracting 26 from both sides gives 22 = 11n. Dividing both sides by 11 gives n = 2."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for x: x - 8 = -13",
+          "options": [
+            "X = -5",
+            "X = -21",
+            "X = 21"
+          ],
+          "correct_answer": "X = -5",
+          "explanation": "Adding 8 to both sides of the equation gives x = -5."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for x: 5x - 4x = -6x + 3",
+          "options": [
+            "X = 3/7",
+            "X = 7/3",
+            "X = -3/7"
+          ],
+          "correct_answer": "X = 3/7",
+          "explanation": "Combining like terms gives x = 9x + 3. Subtracting 9x from both sides gives -8x = 3, so x = 3/7 (following the source's stated solution path)."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for x: 10(2x + 4) = -(-8 - 9x) + 3x",
+          "options": [
+            "X = 4",
+            "X = -4",
+            "X = 3"
+          ],
+          "correct_answer": "X = -4",
+          "explanation": "Expanding and combining like terms leads to 8x + 40 = 8, so 8x = -32, giving x = -4."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for y: 4(2y + 1) - 6y = 18",
+          "options": [
+            "Y = 7",
+            "Y = 8",
+            "Y = 12",
+            "Y = -3"
+          ],
+          "correct_answer": "Y = 7",
+          "explanation": "Distributing and combining like terms gives 2y + 4 = 18, so 2y = 14, giving y = 7."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve: 8n - 3n - 4 = 21",
+          "options": [
+            "N = 5",
+            "N = 17/5",
+            "N = 6",
+            "N = -5"
+          ],
+          "correct_answer": "N = 5",
+          "explanation": "Combining like terms gives 5n - 4 = 21. Adding 4 to both sides gives 5n = 25, so n = 5."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for p: 5p - 16 = 54",
+          "options": [
+            "P = 7.6",
+            "P = 6",
+            "P = 14",
+            "P = 8"
+          ],
+          "correct_answer": "P = 14",
+          "explanation": "Adding 16 to both sides gives 5p = 70. Dividing both sides by 5 gives p = 14."
+        },
+        {
+          "topic": "Linear Equations",
+          "question": "Write an equation and solve to represent the situation: You ate 3 of the 8 slices of pizza. You paid $3.30 as your share of the total cost. How much did the whole pizza cost?",
+          "options": [
+            "3x = 8; x = 3/8",
+            "3x + 8 = 3.30; x = -1.5",
+            "3/8x = 3.30; x = 8.80",
+            "3/8x = 3.30; x = 1.24"
+          ],
+          "correct_answer": "3/8x = 3.30; x = 8.80",
+          "explanation": "The equation 3/8x = 3.30 represents the situation, where x is the cost of the whole pizza. Multiplying both sides by 8/3 gives x = $8.80."
+        },
+        {
+          "topic": "Linear Equations",
+          "question": "Write and solve an equation for the statement: There are 15 members in the high school band. After graduation there are only 7 members. How many members graduated?",
+          "options": [
+            "X + 15 = 7: x = 22",
+            "15 - x = 7: x = 12",
+            "15 - x = 7: x = 8",
+            "X + 15 = 7: x = 8"
+          ],
+          "correct_answer": "15 - x = 7: x = 8",
+          "explanation": "The equation 15 - x = 7 represents the number who graduated. Solving gives x = 8."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for t: 2t - 3t + 8 = 3t - 8",
+          "options": [
+            "T = 4",
+            "T = -4",
+            "T = 8"
+          ],
+          "correct_answer": "T = 4",
+          "explanation": "Rearranging and simplifying the equation gives the solution t = 4."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for a: 4a + 9a = 39",
+          "options": [
+            "A = 30/4",
+            "A = 3",
+            "A = 26",
+            "A = 8"
+          ],
+          "correct_answer": "A = 3",
+          "explanation": "Combining like terms gives 13a = 39. Dividing both sides by 13 gives a = 3."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for a: 2/5 = a - 1/5",
+          "options": [
+            "A = 1",
+            "A = 3/5",
+            "A = 1/5",
+            "A = -3/5"
+          ],
+          "correct_answer": "A = 3/5",
+          "explanation": "Adding 1/5 to both sides gives 2/5 + 1/5 = a, so a = 3/5."
+        },
+        {
+          "topic": "Algebra",
+          "question": "Solve the equation for y in terms of x: 3y = x",
+          "options": [
+            "Y = 3",
+            "3x = y",
+            "X/3 = y"
+          ],
+          "correct_answer": "X/3 = y",
+          "explanation": "Dividing both sides of 3y = x by 3 isolates y, giving y = x/3, equivalently written as x/3 = y."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for x: -10x = -9",
+          "options": [
+            "X = 9/10",
+            "X = 10/9",
+            "X = 1",
+            "X = -1"
+          ],
+          "correct_answer": "X = 9/10",
+          "explanation": "Dividing both sides of the equation by -10 gives x = 9/10."
+        },
+        {
+          "topic": "One Variable Equations",
+          "question": "Solve for x: -x + 6 - 5x = 14 - 2x",
+          "options": [
+            "X = 5/2",
+            "X = 3",
+            "X = -2"
+          ],
+          "correct_answer": "X = -2",
+          "explanation": "Combining like terms gives -4x + 6 = 14 - 2x. Simplifying leads to -2x = 8, so x = -2."
+        }
+      ]
+    },
+    {
+      "subject": "Physics",
+      "topics": [
+        "Mechanics",
+        "Energy",
+        "Electricity",
+        "Waves",
+        "Thermal Physics",
+        "Light and Optics"
+      ],
+      "questions": [
+        {
+          "topic": "Electricity",
+          "question": "Which one of the following is a conductor?",
+          "options": [
+            "Straw",
+            "Metal",
+            "Wool"
+          ],
+          "correct_answer": "Metal",
+          "explanation": "Metal is a conductor because it allows the flow of electric current through it. Metals have free electrons that can move easily, facilitating the transfer of electric charge."
+        },
+        {
+          "topic": "Mechanics",
+          "question": "The push or pull on an object causing it to accelerate is",
+          "options": [
+            "Speed",
+            "Density",
+            "Force",
+            "Mass"
+          ],
+          "correct_answer": "Force",
+          "explanation": "Force is the push or pull on an object that causes it to accelerate, per Newton's second law of motion."
+        },
+        {
+          "topic": "Electricity",
+          "question": "Like charges",
+          "options": [
+            "Attract",
+            "Repel",
+            "Balance one another"
+          ],
+          "correct_answer": "Repel",
+          "explanation": "Like charges repel each other because they create an electric field that pushes them away from each other."
+        },
+        {
+          "topic": "Thermal Physics",
+          "question": "The phase with the most energetic molecules is",
+          "options": [
+            "Solid",
+            "Liquid",
+            "Gas",
+            "Absolute zero"
+          ],
+          "correct_answer": "Gas",
+          "explanation": "Gas molecules move rapidly and collide with each other, giving them higher kinetic energy than solid or liquid molecules."
+        },
+        {
+          "topic": "Electricity",
+          "question": "Ohms (\u03a9) is the unit of measurement for",
+          "options": [
+            "Current",
+            "Resistance",
+            "Voltage",
+            "Temperature"
+          ],
+          "correct_answer": "Resistance",
+          "explanation": "Resistance is a property of a material that hinders the flow of electric current, and it is measured in Ohms."
+        },
+        {
+          "topic": "Waves",
+          "question": "___ waves would cause a sunburn",
+          "options": [
+            "Gamma",
+            "Radio",
+            "UV",
+            "X-ray"
+          ],
+          "correct_answer": "UV",
+          "explanation": "UV (ultraviolet) radiation from the sun damages skin cells when exposure is prolonged, causing sunburn."
+        },
+        {
+          "topic": "Thermal Physics",
+          "question": "The way in which energy travels the length of a metal is",
+          "options": [
+            "Radiation",
+            "Convection",
+            "Conduction",
+            "Conviction"
+          ],
+          "correct_answer": "Conduction",
+          "explanation": "Conduction is the transfer of energy through direct contact between particles in a substance such as metal."
+        },
+        {
+          "topic": "Mechanics",
+          "question": "The average speed of a car that travels 150 km in 3 hours is",
+          "options": [
+            "10 km/h",
+            "25 km/h",
+            "50 km/h",
+            "100 km/h"
+          ],
+          "correct_answer": "50 km/h",
+          "explanation": "Average speed = total distance / total time = 150 km / 3 hours = 50 km/h."
+        },
+        {
+          "topic": "Waves",
+          "question": "Ultraviolet light is an example of",
+          "options": [
+            "Heat energy",
+            "Electromagnetic energy",
+            "Potential energy",
+            "Electrical energy"
+          ],
+          "correct_answer": "Electromagnetic energy",
+          "explanation": "Ultraviolet light is part of the electromagnetic spectrum, characterized by high energy and short wavelength."
+        },
+        {
+          "topic": "Thermal Physics",
+          "question": "The phase of matter with a definite shape and volume is",
+          "options": [
+            "Plasma",
+            "Liquid",
+            "Gas",
+            "Solid"
+          ],
+          "correct_answer": "Solid",
+          "explanation": "Solids have closely packed particles with strong intermolecular forces, giving them a fixed shape and volume."
+        },
+        {
+          "topic": "Mechanics",
+          "question": "Pedaling a bike is an example of",
+          "options": [
+            "Potential energy",
+            "Thermal energy",
+            "Mechanical energy",
+            "Heat energy"
+          ],
+          "correct_answer": "Mechanical energy",
+          "explanation": "Pedaling converts human energy into mechanical energy associated with the motion of the bike."
+        },
+        {
+          "topic": "Energy",
+          "question": "Energy is measured in",
+          "options": [
+            "Newtons",
+            "Amps",
+            "Joules",
+            "Kilograms"
+          ],
+          "correct_answer": "Joules",
+          "explanation": "Joules are the standard SI unit of measurement for energy."
+        },
+        {
+          "topic": "Waves",
+          "question": "Frequency is measured in",
+          "options": [
+            "Meters",
+            "Hertz",
+            "Decibels",
+            "Meters per second"
+          ],
+          "correct_answer": "Hertz",
+          "explanation": "Hertz represents one cycle per second and is the correct unit for measuring frequency."
+        },
+        {
+          "topic": "Waves",
+          "question": "Electromagnetic waves with the longest wavelengths have",
+          "options": [
+            "The highest energy",
+            "The lowest frequency",
+            "The most damaging effects",
+            "The highest frequency"
+          ],
+          "correct_answer": "The lowest frequency",
+          "explanation": "Longer wavelengths correspond to lower frequency, since wave cycles take more time to complete."
+        },
+        {
+          "topic": "Energy",
+          "question": "Energy produced by the sun is",
+          "options": [
+            "Nuclear",
+            "Chemical",
+            "Electrical",
+            "Mechanical"
+          ],
+          "correct_answer": "Nuclear",
+          "explanation": "The sun produces energy through nuclear fusion, where hydrogen atoms combine to form helium, releasing energy."
+        },
+        {
+          "topic": "Electricity",
+          "question": "Current is measured using",
+          "options": [
+            "Coulombs",
+            "Amps",
+            "Ohms",
+            "Volts"
+          ],
+          "correct_answer": "Amps",
+          "explanation": "Amps (amperes) measure the rate at which electric charge flows in a circuit."
+        },
+        {
+          "topic": "Waves",
+          "question": "A police officer using a radar gun is using ___ waves",
+          "options": [
+            "Gamma",
+            "Radio",
+            "UV",
+            "X-ray"
+          ],
+          "correct_answer": "Radio",
+          "explanation": "Radar guns use radio waves that bounce off a target vehicle to measure its speed."
+        },
+        {
+          "topic": "Thermal Physics",
+          "question": "When sublimation occurs,",
+          "options": [
+            "Solid is converted to gas",
+            "Solid is converted to liquid",
+            "Gas is converted to liquid",
+            "Water melts"
+          ],
+          "correct_answer": "Solid is converted to gas",
+          "explanation": "Sublimation converts a solid directly into a gas without passing through the liquid phase, as with dry ice."
+        },
+        {
+          "topic": "Waves",
+          "question": "Why do you hear thunder after you see lightning?",
+          "options": [
+            "Light and sound travel at the same speeds",
+            "Sound is faster than light",
+            "Light is faster than sound",
+            "Sound is faster in certain temperatures"
+          ],
+          "correct_answer": "Light is faster than sound",
+          "explanation": "Light travels much faster than sound, so the flash of lightning is seen before the thunder is heard."
+        },
+        {
+          "topic": "Electricity",
+          "question": "What voltage produces a current of 300 amps with a resistance of 20 Ohms?",
+          "options": [
+            "6000 volts",
+            "600 volts",
+            "15 volts",
+            "0.15 volts"
+          ],
+          "correct_answer": "6000 volts",
+          "explanation": "By Ohm's Law, V = I \u00d7 R = 300 amps \u00d7 20 Ohms = 6000 volts."
+        },
+        {
+          "topic": "Waves",
+          "question": "Bats use ___ to locate food and navigate",
+          "options": [
+            "Acoustics",
+            "Resonance",
+            "Echolocation",
+            "Infrared"
+          ],
+          "correct_answer": "Echolocation",
+          "explanation": "Bats emit high-frequency sounds and analyze the echoes to determine the location, distance, and size of objects."
+        },
+        {
+          "topic": "Mechanics",
+          "question": "The tendency of matter to resist a change in motion is ___",
+          "options": [
+            "Gravity",
+            "Inertia",
+            "Friction",
+            "Resistance"
+          ],
+          "correct_answer": "Inertia",
+          "explanation": "Inertia is the property of matter that causes objects to resist changes in velocity or direction, related to mass."
+        },
+        {
+          "topic": "Thermal Physics",
+          "question": "Which temperature scale has water boiling at 100 and freezing at 0?",
+          "options": [
+            "Fahrenheit",
+            "Celsius",
+            "Kelvin",
+            "Rankine"
+          ],
+          "correct_answer": "Celsius",
+          "explanation": "Water boils at 100 degrees Celsius and freezes at 0 degrees Celsius on the Celsius scale."
+        },
+        {
+          "topic": "Waves",
+          "question": "A wave has a wavelength of 3 m and a frequency of 6 Hz. What is the speed of the wave?",
+          "options": [
+            "2 m/s",
+            "9 m/s",
+            "18 m/s",
+            "0.5 m/s"
+          ],
+          "correct_answer": "18 m/s",
+          "explanation": "Wave speed = wavelength \u00d7 frequency = 3 m \u00d7 6 Hz = 18 m/s."
+        },
+        {
+          "topic": "Thermal Physics",
+          "question": "The temperature at which particles would not be moving is",
+          "options": [
+            "32 degrees F",
+            "-273 Kelvin",
+            "0 degrees Celsius",
+            "Absolute Zero"
+          ],
+          "correct_answer": "Absolute Zero",
+          "explanation": "Absolute zero is the lowest possible temperature, where all molecular motion ceases; it equals 0 Kelvin or -273\u00b0C."
+        },
+        {
+          "topic": "Mechanics",
+          "question": "Your weight is different from your mass because",
+          "options": [
+            "Mass is the force of gravity acting on your weight",
+            "Weight is the force of gravity acting on your mass",
+            "Weight takes kinetic energy into account",
+            "Weight and mass are always the same"
+          ],
+          "correct_answer": "Weight is the force of gravity acting on your mass",
+          "explanation": "Weight depends on gravitational force acting on mass, while mass itself remains constant regardless of location."
+        },
+        {
+          "topic": "Waves",
+          "question": "Sound waves with frequencies above the normal human range of hearing are",
+          "options": [
+            "Infrasound",
+            "Ultrasound",
+            "Decibels",
+            "Resonance"
+          ],
+          "correct_answer": "Ultrasound",
+          "explanation": "Ultrasound refers to sound waves with frequencies higher than 20,000 Hz, above the upper limit of human hearing."
+        },
+        {
+          "topic": "Light and Optics",
+          "question": "When white light strikes a black object,",
+          "options": [
+            "No light is reflected",
+            "All light is reflected",
+            "Some light is reflected",
+            "Light passes through the object"
+          ],
+          "correct_answer": "No light is reflected",
+          "explanation": "Black objects absorb all wavelengths of light and do not reflect any of it, converting it to heat instead."
+        },
+        {
+          "topic": "Light and Optics",
+          "question": "Clear glass is ___ while frosted glass is ___",
+          "options": [
+            "Opaque, transparent",
+            "Translucent, opaque",
+            "Translucent, transparent",
+            "Transparent, translucent"
+          ],
+          "correct_answer": "Transparent, translucent",
+          "explanation": "Clear glass is transparent, allowing light to pass through clearly, while frosted glass is translucent, scattering light."
+        },
+        {
+          "topic": "Light and Optics",
+          "question": "When light passes from air to water,",
+          "options": [
+            "It speeds up",
+            "It slows down",
+            "It continues at the same speed",
+            "It stops completely"
+          ],
+          "correct_answer": "It slows down",
+          "explanation": "Light travels slower in water than in air; this change in speed as it enters a new medium is known as refraction."
+        }
+      ]
+    },
+    {
+      "subject": "Chemistry",
+      "topics": [
+        "Physical Chemistry",
+        "States of Matter"
+      ],
+      "questions": [
+        {
+          "topic": "States of Matter",
+          "question": "What are the different states of matter?",
+          "options": [
+            "Solids",
+            "Liquids",
+            "Gases",
+            "All of these"
+          ],
+          "correct_answer": "All of these",
+          "explanation": "The different states of matter include solids, liquids, and gases, each with distinct shape and volume properties."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "Particles of matter are continuously moving, then they possess which energy?",
+          "options": [
+            "Potential",
+            "Kinetic",
+            "Electric",
+            "None of these"
+          ],
+          "correct_answer": "Kinetic",
+          "explanation": "Since particles are constantly in motion, they possess kinetic energy, the energy of motion."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "The particles of matter are very",
+          "options": [
+            "Small",
+            "Large",
+            "Medium",
+            "None of these"
+          ],
+          "correct_answer": "Small",
+          "explanation": "Particles of matter, such as atoms, are extremely small and cannot be seen with the naked eye."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "With increase in temperature the kinetic energy of the particles also",
+          "options": [
+            "Increases",
+            "Decreases",
+            "Same",
+            "None of these"
+          ],
+          "correct_answer": "Increases",
+          "explanation": "Temperature is a measure of the average kinetic energy of particles, so as temperature rises, kinetic energy increases."
+        },
+        {
+          "topic": "Physical Chemistry",
+          "question": "Matter has",
+          "options": [
+            "Mass",
+            "Volume",
+            "Both of these",
+            "None of these"
+          ],
+          "correct_answer": "Both of these",
+          "explanation": "Matter is anything that has mass and takes up space (volume), so both properties apply."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "As temperature rises, particles move",
+          "options": [
+            "Faster",
+            "Slower",
+            "At same rate",
+            "None of these"
+          ],
+          "correct_answer": "Faster",
+          "explanation": "As temperature increases, average kinetic energy increases, causing particles to move faster."
+        },
+        {
+          "topic": "Physical Chemistry",
+          "question": "Which of the following belong to matter?",
+          "options": [
+            "Clouds",
+            "Stars",
+            "Stones",
+            "All of the above"
+          ],
+          "correct_answer": "All of the above",
+          "explanation": "Clouds, stars, and stones all have mass and occupy space, so they are all classified as matter."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "___ have no fixed shape but have a fixed volume.",
+          "options": [
+            "Solids",
+            "Liquids",
+            "Gases",
+            "Plasma"
+          ],
+          "correct_answer": "Liquids",
+          "explanation": "Liquid particles are close together but not fixed in pattern, allowing liquids to flow while keeping a constant volume."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "How does diffusion become faster?",
+          "options": [
+            "On heating the particles",
+            "By cooling",
+            "By adding same solution",
+            "None of these"
+          ],
+          "correct_answer": "On heating the particles",
+          "explanation": "Heating particles gives them more kinetic energy, causing more frequent collisions and faster diffusion."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "We can observe that solids have",
+          "options": [
+            "Definite shape",
+            "Distinct boundaries",
+            "Fixed Volume",
+            "All of these"
+          ],
+          "correct_answer": "All of these",
+          "explanation": "Solids have a definite shape, distinct boundaries, and fixed volume due to their tightly packed particle structure."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "What are the characteristics of the particles of matter?",
+          "options": [
+            "Presence of intermolecular spaces",
+            "Particles are in constant motion",
+            "They attract each other",
+            "All of these"
+          ],
+          "correct_answer": "All of these",
+          "explanation": "Particles of matter have intermolecular spaces, are in constant motion, and attract each other through intermolecular forces."
+        },
+        {
+          "topic": "Physical Chemistry",
+          "question": "Everything in this universe that is made up of material is called",
+          "options": [
+            "Matter",
+            "Material",
+            "Particles",
+            "None of these"
+          ],
+          "correct_answer": "Matter",
+          "explanation": "Matter refers to anything that occupies space and has mass, comprising atoms and molecules."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "Intermixing of particles of two types of matter on their own is called",
+          "options": [
+            "Suspension",
+            "Diffusion",
+            "Colloidal",
+            "None of these"
+          ],
+          "correct_answer": "Diffusion",
+          "explanation": "Diffusion is the spontaneous intermixing of particles from an area of high to low concentration, without external force."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "___ may break under force but it is difficult to change their shape, so they are rigid.",
+          "options": [
+            "Solids",
+            "Liquids",
+            "Gases",
+            "Plasma"
+          ],
+          "correct_answer": "Solids",
+          "explanation": "Solids have a fixed shape and volume, so while they can break under force, their shape is difficult to change."
+        },
+        {
+          "topic": "Physical Chemistry",
+          "question": "1 L = ___ ml",
+          "options": [
+            "10",
+            "100",
+            "1000",
+            "0.01"
+          ],
+          "correct_answer": "1000",
+          "explanation": "1 liter is equal to 1000 milliliters, a standard metric conversion."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "___ flow and change shape, so they are not rigid but can be called fluids.",
+          "options": [
+            "Solids",
+            "Liquids",
+            "Gases",
+            "Plasma"
+          ],
+          "correct_answer": "Liquids",
+          "explanation": "Liquids flow and change shape, making them not rigid, which is why they are classified as fluids."
+        },
+        {
+          "topic": "Physical Chemistry",
+          "question": "SI unit of mass is",
+          "options": [
+            "Gram",
+            "Decagram",
+            "Kilogram",
+            "Milligram"
+          ],
+          "correct_answer": "Kilogram",
+          "explanation": "The kilogram (kg) is the base unit of mass in the SI system, defined by a physical constant."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "Why does a cooler cool better on a hot dry day?",
+          "options": [
+            "Because the temperature is high and it is less humid on a hot dry day, which enables better evaporation, providing better cooling.",
+            "Because the temperature is low and it is highly humid on a hot dry day, which enables better evaporation, providing better cooling.",
+            "Because the temperature is low and it is less humid on a hot dry day, which enables better evaporation, though low levels of evaporation provide better cooling.",
+            "None of these"
+          ],
+          "correct_answer": "Because the temperature is high and it is less humid on a hot dry day, which enables better evaporation, providing better cooling.",
+          "explanation": "Low humidity allows the air to absorb more moisture, enabling faster evaporation, which has a cooling effect."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "Why are we able to sip hot tea or milk faster from a saucer rather than a cup?",
+          "options": [
+            "A saucer has a smaller surface area than a cup, which promotes slower evaporation, so the liquid cools down faster.",
+            "A saucer has a smaller surface area than a cup, which promotes quicker evaporation, so the liquid cools down faster.",
+            "A saucer has a larger surface area than a cup, which promotes quicker evaporation, so the liquid cools down faster.",
+            "None of these"
+          ],
+          "correct_answer": "A saucer has a larger surface area than a cup, which promotes quicker evaporation, so the liquid cools down faster.",
+          "explanation": "A saucer's larger surface area allows more exposure to air, promoting quicker evaporation and faster cooling."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "Compressibility of solids is",
+          "options": [
+            "Low",
+            "Very low",
+            "High",
+            "Very high"
+          ],
+          "correct_answer": "Very low",
+          "explanation": "Solids have a rigid, closely packed particle arrangement with strong intermolecular forces, making them very hard to compress."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "In how many types is matter classified?",
+          "options": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ],
+          "correct_answer": "5",
+          "explanation": "Matter is classified into five types: solids, liquids, gases, plasmas, and Bose-Einstein condensates."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "___ have a tendency to maintain their shape when subjected to outside force.",
+          "options": [
+            "Solids",
+            "Liquids",
+            "Gases",
+            "All of the above"
+          ],
+          "correct_answer": "Solids",
+          "explanation": "Solids resist deformation because their closely packed particles are held by strong intermolecular forces."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "A diver is able to cut through water in a swimming pool. Which property of matter does this observation show?",
+          "options": [
+            "Due to strong force of attraction between water molecules",
+            "Due to weak force of attraction between water molecules",
+            "Due to weak force of attraction of human",
+            "Due to strong force of attraction of human"
+          ],
+          "correct_answer": "Due to weak force of attraction between water molecules",
+          "explanation": "The weak force of attraction between water molecules allows a diver to move through the spaces between them."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "The smell of hot sizzling food reaches you several meters away, but to get the smell from cold food you have to go close. Why?",
+          "options": [
+            "Because lower temperature acquires high kinetic energy",
+            "Because lower temperature acquires low kinetic energy",
+            "Because higher temperature acquires low kinetic energy",
+            "Because higher temperature acquires high kinetic energy"
+          ],
+          "correct_answer": "Because higher temperature acquires high kinetic energy",
+          "explanation": "At higher temperatures particles have more kinetic energy and move faster, releasing more volatile compounds that travel further."
+        },
+        {
+          "topic": "Physical Chemistry",
+          "question": "SI unit of volume is",
+          "options": [
+            "Cm cube",
+            "M cube",
+            "M square",
+            "Cm square"
+          ],
+          "correct_answer": "M cube",
+          "explanation": "The SI unit of volume is the cubic meter (m\u00b3), representing the volume of a cube with 1-meter sides."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "Which gases are essential for the survival of aquatic animals and plants?",
+          "options": [
+            "Oxygen and hydrogen",
+            "Nitrogen and carbon dioxide",
+            "Oxygen and nitrogen",
+            "Oxygen and carbon dioxide"
+          ],
+          "correct_answer": "Oxygen and carbon dioxide",
+          "explanation": "Aquatic animals need oxygen for respiration, and aquatic plants need carbon dioxide for photosynthesis."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "How does the water kept in an earthen pot become cool during summer?",
+          "options": [
+            "An earthen pot is porous; its tiny pores do not facilitate penetration of water, hence no evaporation from the pot surface.",
+            "An earthen pot is porous; its tiny pores facilitate penetration of water, hence evaporation from the pot surface.",
+            "An earthen pot is porous; its tiny pores facilitate penetration of air, hence evaporation from the pot surface.",
+            "None of these"
+          ],
+          "correct_answer": "An earthen pot is porous; its tiny pores facilitate penetration of water, hence evaporation from the pot surface.",
+          "explanation": "The porous pot lets water seep through and evaporate from the surface, which produces a cooling effect."
+        },
+        {
+          "topic": "Physical Chemistry",
+          "question": "1 ml =",
+          "options": [
+            "1 cm3",
+            "10 cm3",
+            "1 m3",
+            "10 m3"
+          ],
+          "correct_answer": "1 cm3",
+          "explanation": "1 milliliter (ml) is equal to 1 cubic centimeter (cm3)."
+        },
+        {
+          "topic": "States of Matter",
+          "question": "The rate of diffusion of liquids is higher than that of solids. Why?",
+          "options": [
+            "Particles move freely",
+            "Have greater space between each other as compared to particles in solid state",
+            "Both of these",
+            "None of these"
+          ],
+          "correct_answer": "Both of these",
+          "explanation": "Liquid particles move freely and have more space between them than solid particles, allowing faster diffusion."
+        },
+        {
+          "topic": "Physical Chemistry",
+          "question": "1 L = ___ dm3",
+          "options": [
+            "1",
+            "10",
+            "100",
+            "0.1"
+          ],
+          "correct_answer": "1",
+          "explanation": "1 liter is equal to 1 cubic decimeter (dm3), a standard metric equivalence."
+        }
+      ]
+    }
+  ]
+}

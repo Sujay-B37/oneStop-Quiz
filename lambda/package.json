@@ -1,0 +1,10 @@
+{
+  "name": "quiz-platform-lambda",
+  "version": "1.0.0",
+  "description": "Lambda function for scoring validation",
+  "main": "scoreCalculator.js",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.609.0",
+    "@aws-sdk/lib-dynamodb": "^3.609.0"
+  }
+}
