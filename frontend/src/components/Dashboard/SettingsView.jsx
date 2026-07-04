@@ -21,11 +21,6 @@ const SettingsView = () => {
     }));
   };
 
-  const handlePasswordChange = (e) => {
-    e.preventDefault();
-    alert('Password change endpoint will trigger an AWS Cognito password reset. (Offline Simulation)');
-  };
-
   return (
     <div className="settings-view-container">
       <h3>Account & Application Settings</h3>
@@ -60,28 +55,6 @@ const SettingsView = () => {
             </button>
           </div>
         </div>
-      </div>
-
-      {/* Password Reset */}
-      <div className="settings-card">
-        <h4>Change Password</h4>
-        <form onSubmit={handlePasswordChange} className="password-reset-form">
-          <div className="form-group">
-            <label htmlFor="currentPassword">Current Password</label>
-            <input type="password" id="currentPassword" placeholder="••••••••" required />
-          </div>
-          <div className="form-group">
-            <label htmlFor="newPassword">New Password</label>
-            <input type="password" id="newPassword" placeholder="••••••••" required />
-          </div>
-          <div className="form-group">
-            <label htmlFor="confirmNewPassword">Confirm New Password</label>
-            <input type="password" id="confirmNewPassword" placeholder="••••••••" required />
-          </div>
-          <button type="submit" className="auth-button save-settings-btn">
-            Update Password
-          </button>
-        </form>
       </div>
     </div>
   );

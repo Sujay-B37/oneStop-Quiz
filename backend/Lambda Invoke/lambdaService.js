@@ -1,47 +1,59 @@
 /**
- * Lambda Invoke/lambdaService.js (MOCK IMPLEMENTATION)
- * Description: Mimics remote AWS Lambda invocations by calculating quiz scores locally.
- * Returns the exact JSON structure expected by the resultController.
+ * Lambda Invoke/lambdaService.js
+ * Description: Invokes the AWS Lambda function to evaluate quiz answers.
+ * Uses AWS SDK v3 Lambda Client to execute the remote function synchronously.
  */
+
+const { InvokeCommand } = require("@aws-sdk/client-lambda");
+const { lambdaClient } = require("../AWS SDK Calls/awsConfig");
+
+// Load the Lambda function name from environment variables with a fallback default
+const LAMBDA_FUNCTION_NAME = process.env.LAMBDA_FUNCTION_NAME || "scoreCalculator";
 
 /**
- * Invoke the mock score calculator locally.
- * @param {Array<string>} correctAnswers - List of correct answers from mock quiz db.
- * @param {Array<string>} userAnswers - List of user answers submitted by the client.
- * @returns {Promise<object>} Score calculation results.
+ * Invoke the scoreCalculator Lambda function to compute the user's score.
+ * @param {Array<string>} correctAnswers - List of correct answers from DynamoDB.
+ * @param {Array<string>} userAnswers - List of user answers from request body.
+ * @returns {Promise<object>} Calculation results containing score and totalQuestions.
  */
 const invokeScoreCalculator = async (correctAnswers, userAnswers) => {
-    // Mimic network latency of a Lambda call (e.g. 200ms)
-    await new Promise(resolve => setTimeout(resolve, 200));
+    // Construct the payload to send to Lambda
+    const payload = JSON.stringify({
+        correctAnswers,
+        userAnswers
+    });
 
-    // Ensure inputs are arrays
-    const correctArr = Array.isArray(correctAnswers) ? correctAnswers : [];
-    const userArr = Array.isArray(userAnswers) ? userAnswers : [];
-
-    let score = 0;
-    const totalQuestions = correctArr.length;
-
-    // Evaluate answers
-    for (let i = 0; i < totalQuestions; i++) {
-        const correctVal = correctArr[i];
-        const userVal = userArr[i];
-
-        if (correctVal !== undefined && userVal !== undefined) {
-            const sanitizedCorrect = String(correctVal).trim().toLowerCase();
-            const sanitizedUser = String(userVal).trim().toLowerCase();
-
-            if (sanitizedCorrect === sanitizedUser) {
-                score++;
-            }
-        }
-    }
-
-    console.log(`[MOCK LAMBDA] Calculated score: ${score}/${totalQuestions}`);
-
-    return {
-        score,
-        totalQuestions
+    const params = {
+        FunctionName: LAMBDA_FUNCTION_NAME,
+        // The Payload must be passed as a Uint8Array or string in SDK v3
+        Payload: new TextEncoder().encode(payload)
     };
+
+    try {
+        console.log(`[LAMBDA SDK] Invoking remote Lambda function: ${LAMBDA_FUNCTION_NAME}`);
+        const command = new InvokeCommand(params);
+        const response = await lambdaClient.send(command);
+
+        // Check if there was a function error (e.g. Lambda crashed during execution)
+        if (response.FunctionError) {
+            const errorDetails = new TextDecoder("utf-8").decode(response.Payload);
+            console.error("Lambda function error response details:", errorDetails);
+            throw new Error(`Lambda FunctionError: ${response.FunctionError}. Details: ${errorDetails}`);
+        }
+
+        // Decode the returned Payload (Uint8Array) to JSON string
+        const responsePayload = new TextDecoder("utf-8").decode(response.Payload);
+        const result = JSON.parse(responsePayload);
+
+        console.log("[LAMBDA SDK] Lambda score calculation success:", result);
+        return {
+            score: typeof result.score === "number" ? result.score : 0,
+            totalQuestions: typeof result.totalQuestions === "number" ? result.totalQuestions : correctAnswers.length
+        };
+    } catch (error) {
+        console.error("Failed to invoke Lambda function:", error);
+        throw error;
+    }
 };
 
 module.exports = {

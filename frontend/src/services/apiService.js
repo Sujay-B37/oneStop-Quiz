@@ -20,8 +20,8 @@ client.interceptors.request.use((config) => {
   return config;
 });
 
-// Active mock flag (falls back automatically if server is down)
-let useMocks = false;
+// Active mock flag (permanently disabled for live AWS phase)
+const useMocks = false;
 
 // Mock database states
 const mockUser = {
@@ -106,29 +106,31 @@ const parseJwt = (token) => {
   }
 };
 
-// Helper to check server availability (ping the root health check)
-const checkConnection = async () => {
-  try {
-    await axios.get(`${API_URL}/`, { timeout: 1500 });
-    useMocks = false;
-  } catch (err) {
-    console.warn('Backend server unreachable. Enabling mock-mode fallbacks.');
-    useMocks = true;
-  }
-};
-
-// Auto-run connection check
-checkConnection();
-
 // API Service Interfaces
 export const apiService = {
+  // Restore session from localStorage token
+  getCurrentUser: () => {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+    const decoded = parseJwt(token);
+    if (!decoded) return null;
+
+    // Check if token has expired (exp is in seconds)
+    const currentTime = Math.floor(Date.now() / 1000);
+    if (decoded.exp && decoded.exp < currentTime) {
+      console.warn('Saved Cognito token has expired. Clearing session.');
+      localStorage.removeItem('token');
+      return null;
+    }
+
+    return {
+      email: decoded.email,
+      username: decoded.preferred_username || (decoded.email ? decoded.email.split('@')[0] : 'Quizzer')
+    };
+  },
+
   // Authentication
   login: async (email, password) => {
-    if (useMocks) {
-      console.log('[Mock API] POST /login called');
-      await new Promise((resolve) => setTimeout(resolve, 800));
-      return { token: 'mock-jwt-token', user: { email, username: 'Quizzer' } };
-    }
     try {
       const response = await client.post('/api/auth/login', { email, password });
       const idToken = response.data.data.idToken;
@@ -137,27 +139,20 @@ export const apiService = {
         token: idToken,
         user: {
           email: decoded?.email || email,
-          username: decoded?.preferred_username || 'Quizzer'
+          username: decoded?.preferred_username || (decoded?.email ? decoded.email.split('@')[0] : (email ? email.split('@')[0] : 'Quizzer'))
         }
       };
     } catch (err) {
-      if (!err.response) { useMocks = true; return apiService.login(email, password); }
       throw err;
     }
   },
 
   signup: async (username, email, password) => {
-    if (useMocks) {
-      console.log('[Mock API] POST /signup called');
-      await new Promise((resolve) => setTimeout(resolve, 800));
-      return { status: 'success', data: { username, email } };
-    }
     try {
       // Backend expects username, email, password
       const response = await client.post('/api/auth/signup', { username, email, password });
       return response.data;
     } catch (err) {
-      if (!err.response) { useMocks = true; return apiService.signup(username, email, password); }
       throw err;
     }
   },
@@ -186,49 +181,15 @@ export const apiService = {
       questions: localSub.questions.map((q, idx) => ({
         id: idx + 1,
         question: q.question,
-        options: q.options
+        options: q.options,
+        correct_answer: q.correct_answer,
+        explanation: q.explanation
       }))
     };
   },
 
   // Submit Quiz Answers
   submitQuiz: async (subjectId, answersList) => {
-    if (useMocks) {
-      console.log(`[Mock API] POST /submit called for subject ${subjectId}`);
-      await new Promise((resolve) => setTimeout(resolve, 800));
-      
-      let score = 0;
-      let questions = [];
-
-      const customSub = customMockQuestions[subjectId.toLowerCase()];
-      if (customSub) {
-        questions = customSub.questions;
-      }
-
-      answersList.forEach((userAnsVal, idx) => {
-        const questionObj = questions[idx];
-        if (questionObj) {
-          if (userAnsVal === questionObj.correct_answer) {
-            score++;
-          }
-        }
-      });
-
-      const total = questions.length > 0 ? questions.length : 3;
-      const percentage = Math.round((score / total) * 100);
-
-      // Save to mock history in-memory
-      const newRecord = {
-        subject: customSub ? customSub.subject : subjectId.toUpperCase(),
-        score,
-        total,
-        percentage,
-        date: new Date().toISOString().split('T')[0]
-      };
-      mockResultsHistory.unshift(newRecord);
-
-      return { score, total, percentage };
-    }
     try {
       // POST to /api/result/submit
       const response = await client.post('/api/result/submit', {
@@ -242,29 +203,32 @@ export const apiService = {
         percentage: Math.round((data.score / data.totalQuestions) * 100)
       };
     } catch (err) {
-      if (!err.response) { useMocks = true; return apiService.submitQuiz(subjectId, answersList); }
       throw err;
     }
   },
 
   // Results History
   getResults: async () => {
-    if (useMocks) {
-      console.log('[Mock API] GET /results called');
-      return mockResultsHistory;
-    }
     try {
       const response = await client.get('/api/result');
-      return response.data.data.map((r, idx) => ({
-        id: idx,
-        subject: r.quizId === 'quiz-aws-basics' ? 'AWS Academy Basics' : 
-                 r.quizId === 'quiz-js-trivia' ? 'JavaScript Fundamentals' : r.quizId,
-        score: r.score,
-        total: r.totalQuestions,
-        date: r.timestamp ? r.timestamp.split('T')[0] : new Date().toISOString().split('T')[0]
-      }));
+      return response.data.data.map((r, idx) => {
+        // Map database quizIds to human-readable names
+        let subjectName = r.quizId;
+        if (r.quizId === 'quiz-math') subjectName = 'Mathematics';
+        else if (r.quizId === 'quiz-physics') subjectName = 'Physics';
+        else if (r.quizId === 'quiz-chemistry') subjectName = 'Chemistry';
+        else if (r.quizId === 'quiz-aws-basics') subjectName = 'AWS Academy Basics';
+        else if (r.quizId === 'quiz-js-trivia') subjectName = 'JavaScript Fundamentals';
+
+        return {
+          id: idx,
+          subject: subjectName,
+          score: r.score,
+          total: 10, // Always show score out of 10 in UI history views
+          date: r.timestamp ? r.timestamp.split('T')[0] : new Date().toISOString().split('T')[0]
+        };
+      });
     } catch (err) {
-      if (!err.response) { useMocks = true; return apiService.getResults(); }
       throw err;
     }
   }

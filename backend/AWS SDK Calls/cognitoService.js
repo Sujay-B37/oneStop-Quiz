@@ -1,114 +1,91 @@
 /**
- * AWS SDK Calls/cognitoService.js (MOCK IMPLEMENTATION)
- * Description: Mimics AWS Cognito behaviors using in-memory arrays and jsonwebtoken.
- * Generates local JWTs and errors to match AWS Cognito Service characteristics.
+ * AWS SDK Calls/cognitoService.js
+ * Description: Interacts with Amazon Cognito User Pool using AWS SDK v3.
+ * Implements user sign-up and authentication (login).
  */
 
-const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
+const { SignUpCommand, InitiateAuthCommand } = require("@aws-sdk/client-cognito-identity-provider");
+const { cognitoClient } = require("./awsConfig");
 
-// Local secret key for signing mock JWTs
-const MOCK_JWT_SECRET = process.env.JWT_SECRET || "local-super-secret-key";
+// Load Environment Configuration
+const clientId = process.env.COGNITO_CLIENT_ID;
 
-// In-memory Cognito Database
-const mockCognitoUsers = [];
+if (!clientId) {
+    console.warn("WARNING: COGNITO_CLIENT_ID is not configured in environment variables.");
+}
 
 /**
- * Register a user in mock Cognito.
- * @param {string} username - Chosen username.
+ * Register a new user in the Amazon Cognito User Pool.
+ * @param {string|null} username - Chosen username (optional).
  * @param {string} email - User email address.
  * @param {string} password - User password.
- * @returns {Promise<object>} User Sub ID and status.
+ * @returns {Promise<object>} Object containing userSub and verification details.
  */
 const signUpUser = async (username, email, password) => {
-    // Mimic network latency
-    await new Promise(resolve => setTimeout(resolve, 300));
+    const userAttributes = [
+        {
+            Name: "email",
+            Value: email
+        }
+    ];
 
-    // Check if user already exists
-    const userExists = mockCognitoUsers.some(u => u.email.toLowerCase() === email.toLowerCase());
-    if (userExists) {
-        const error = new Error("User already exists.");
-        error.name = "UsernameExistsException";
-        throw error;
+    // Conditionally add preferred_username if provided
+    if (username) {
+        userAttributes.push({
+            Name: "preferred_username",
+            Value: username
+        });
     }
 
-    // Validate simple password requirement
-    if (password.length < 6) {
-        const error = new Error("Password must be at least 6 characters.");
-        error.name = "InvalidPasswordException";
+    const input = {
+        ClientId: clientId,
+        Username: email, // Set Username as email to align with email login
+        Password: password,
+        UserAttributes: userAttributes
+    };
+
+    try {
+        console.log(`[COGNITO SDK] Dispatching SignUpCommand for email: ${email}`);
+        const command = new SignUpCommand(input);
+        const response = await cognitoClient.send(command);
+        return {
+            userSub: response.UserSub,
+            userConfirmed: response.UserConfirmed
+        };
+    } catch (error) {
+        console.error("Cognito SignUp Error:", error);
         throw error;
     }
-
-    // Generate Cognito Sub ID (UUID)
-    const userSub = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 15);
-    
-    const newUser = {
-        userSub,
-        username,
-        email,
-        password // Storing in plain-text for mock simplicity
-    };
-    
-    mockCognitoUsers.push(newUser);
-    console.log(`[MOCK COGNITO] Signed up new user: ${email} (Sub: ${userSub})`);
-    
-    return {
-        userSub,
-        userConfirmed: true
-    };
 };
 
 /**
- * Authenticate a user in mock Cognito and return signed JWTs.
+ * Authenticate a user with Amazon Cognito User Pool.
  * @param {string} email - Registered email.
  * @param {string} password - User password.
- * @returns {Promise<object>} Object matching Cognito's AuthenticationResult.
+ * @returns {Promise<object>} Cognito AuthenticationResult containing JWTs (IdToken, AccessToken, RefreshToken).
  */
 const signInUser = async (email, password) => {
-    // Mimic network latency
-    await new Promise(resolve => setTimeout(resolve, 300));
-
-    // Find the user record
-    const user = mockCognitoUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
-    if (!user) {
-        const error = new Error("User does not exist.");
-        error.name = "UserNotFoundException";
-        throw error;
-    }
-
-    // Check credentials
-    if (user.password !== password) {
-        const error = new Error("Incorrect password.");
-        error.name = "NotAuthorizedException";
-        throw error;
-    }
-
-    // Construct JWT claims matching a standard Cognito ID Token payload
-    const jwtPayload = {
-        sub: user.userSub,
-        email: user.email,
-        preferred_username: user.username,
-        iss: "mock-cognito-identity-provider",
-        aud: "mock-client-id",
-        exp: Math.floor(Date.now() / 1000) + 3600 // 1 hour expiration
+    const input = {
+        AuthFlow: "USER_PASSWORD_AUTH",
+        ClientId: clientId,
+        AuthParameters: {
+            USERNAME: email,
+            PASSWORD: password
+        }
     };
 
-    // Sign the mock ID token using jsonwebtoken
-    const idToken = jwt.sign(jwtPayload, MOCK_JWT_SECRET);
-    
-    console.log(`[MOCK COGNITO] Authenticated user: ${email}`);
-
-    return {
-        AccessToken: "mock-access-token-string",
-        IdToken: idToken,
-        RefreshToken: "mock-refresh-token-string",
-        ExpiresIn: 3600
-    };
+    try {
+        console.log(`[COGNITO SDK] Dispatching InitiateAuthCommand for email: ${email}`);
+        const command = new InitiateAuthCommand(input);
+        const response = await cognitoClient.send(command);
+        return response.AuthenticationResult;
+    } catch (error) {
+        console.error("Cognito InitiateAuth Error:", error);
+        throw error;
+    }
 };
 
-// Export the internal memory store for verification purposes (or other mock services)
 module.exports = {
     signUpUser,
-    signInUser,
-    _mockCognitoUsers: mockCognitoUsers // Internal export for local linking if needed
+    signInUser
 };
