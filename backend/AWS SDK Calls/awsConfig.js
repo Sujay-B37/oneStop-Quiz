@@ -2,6 +2,7 @@
  * AWS SDK Calls/awsConfig.js
  * Description: Centralizes client initialization for AWS SDK v3.
  * Configures and exports Cognito, DynamoDB, and Lambda client instances.
+ * Supports temporary security credentials (session token) for AWS Academy.
  */
 
 const { CognitoIdentityProviderClient } = require("@aws-sdk/client-cognito-identity-provider");
@@ -24,6 +25,11 @@ if (process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY) {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     };
+
+    // Support temporary credentials (e.g. AWS Academy Learner Labs)
+    if (process.env.AWS_SESSION_TOKEN) {
+        config.credentials.sessionToken = process.env.AWS_SESSION_TOKEN;
+    }
 }
 
 // 1. Initialize AWS Cognito client

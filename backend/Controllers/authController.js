@@ -15,13 +15,16 @@ exports.signup = async (req, res, next) => {
     try {
         const { username, email, password } = req.body;
 
-        // Basic Input Validation
-        if (!username || !email || !password) {
+        // Basic Input Validation (username is optional for email-only configuration)
+        if (!email || !password) {
             return res.status(400).json({
                 status: "error",
-                message: "Missing required fields: username, email, password"
+                message: "Missing required fields: email, password"
             });
         }
+
+        // Fallback username to email prefix if not explicitly provided
+        const finalUsername = username || email.split("@")[0];
 
         // 1. Sign up user in Cognito
         console.log(`Signing up user in Cognito: ${email}`);
@@ -30,14 +33,14 @@ exports.signup = async (req, res, next) => {
 
         // 2. Save user record in DynamoDB
         console.log(`Saving user record in DynamoDB for userId: ${userSub}`);
-        await saveUser(userSub, username, email);
+        await saveUser(userSub, finalUsername, email);
 
         return res.status(201).json({
             status: "success",
             message: "User registered successfully. Please verify your email if required.",
             data: {
                 userId: userSub,
-                username,
+                username: finalUsername,
                 email
             }
         });

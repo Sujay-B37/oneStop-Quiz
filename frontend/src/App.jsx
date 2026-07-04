@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Login from './components/Login/Login.jsx';
 import Signup from './components/Signup/Signup.jsx';
 import Dashboard from './components/Dashboard/Dashboard.jsx';
@@ -14,6 +14,15 @@ function App() {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [resultData, setResultData] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  // Restore session from token on page reload
+  useEffect(() => {
+    const activeUser = apiService.getCurrentUser();
+    if (activeUser) {
+      setUser(activeUser);
+      setCurrentView('dashboard');
+    }
+  }, []);
 
   const handleToggleView = () => {
     setCurrentView((prev) => (prev === 'login' ? 'signup' : 'login'));
@@ -69,11 +78,17 @@ function App() {
     setLoading(true);
     try {
       const data = await apiService.getQuiz(subjectId);
+      // Map questions to include their original database index
+      const questionsWithIndices = data.questions.map((q, idx) => ({
+        ...q,
+        originalIndex: idx
+      }));
+
       // Pick exactly 10 questions at random
       const quizSubset = {
         id: subjectId,
         subject: data.subject,
-        questions: getRandomTenQuestions(data.questions)
+        questions: getRandomTenQuestions(questionsWithIndices)
       };
       setActiveQuiz(quizSubset);
       setSelectedAnswers({});
@@ -92,10 +107,15 @@ function App() {
     setSelectedAnswers(answers);
     setLoading(true);
     try {
-      // Map answers to the array of strings required by the backend
-      const answersList = activeQuiz.questions.map((q, idx) => {
+      // Create a full array of 30 empty strings (matching the total questions in the database)
+      const answersList = Array(30).fill('');
+
+      // Place the answers at their correct original database positions
+      activeQuiz.questions.forEach((q, idx) => {
         const selectedOptionIdx = answers[idx];
-        return selectedOptionIdx !== undefined ? q.options[selectedOptionIdx] : '';
+        if (selectedOptionIdx !== undefined) {
+          answersList[q.originalIndex] = q.options[selectedOptionIdx];
+        }
       });
 
       // POST to submit via apiService
@@ -103,8 +123,8 @@ function App() {
 
       setResultData({
         score: submitResponse.score,
-        total: submitResponse.total,
-        percentage: submitResponse.percentage,
+        total: 10, // Display score out of 10 questions in the UI
+        percentage: Math.round((submitResponse.score / 10) * 100),
         timeSpent: timeSpent
       });
       setCurrentView('result');

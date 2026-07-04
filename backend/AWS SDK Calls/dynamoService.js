@@ -1,173 +1,163 @@
 /**
- * AWS SDK Calls/dynamoService.js (MOCK IMPLEMENTATION)
- * Description: Mimics AWS DynamoDB operations using local memory arrays.
- * Contains mock tables for Users, Quizzes, and Results to allow local testing.
+ * AWS SDK Calls/dynamoService.js
+ * Description: Interacts with Amazon DynamoDB using AWS SDK v3 (DynamoDBDocumentClient).
+ * Provides methods for user registration, quiz retrieval, score saving, and score retrieval.
+ * Automatically normalizes quizId format for frontend compatibility.
  */
 
-const fs = require("fs");
-const path = require("path");
+const { PutCommand, GetCommand, ScanCommand, QueryCommand } = require("@aws-sdk/lib-dynamodb");
+const { dynamoDbDocumentClient } = require("./awsConfig");
 
-// In-Memory Database Arrays
-const mockUsers = [];
-const mockResults = [];
-
-// Static Mock Quiz Catalog
-const mockQuizzes = [
-    {
-        quizId: "quiz-aws-basics",
-        title: "AWS Academy Basics",
-        description: "Test your fundamental knowledge of AWS core services, cloud concepts, and terminology.",
-        questions: [
-            {
-                questionText: "Which AWS service is used to run virtual server instances in the cloud?",
-                options: ["Amazon S3", "Amazon EC2", "AWS Lambda", "Amazon RDS"],
-                correctAnswer: "Amazon EC2"
-            },
-            {
-                questionText: "What does S3 stand for in Amazon S3?",
-                options: ["Simple Storage Service", "Secure Server System", "Super Speed Storage", "System Security Server"],
-                correctAnswer: "Simple Storage Service"
-            },
-            {
-                questionText: "Which DynamoDB primary key type is composed of both a partition key and a sort key?",
-                options: ["Simple Primary Key", "Composite Primary Key", "Global Secondary Key", "Local Secondary Key"],
-                correctAnswer: "Composite Primary Key"
-            }
-        ]
-    },
-    {
-        quizId: "quiz-js-trivia",
-        title: "JavaScript Fundamentals",
-        description: "Challenge yourself with basic JavaScript concepts, scope, and variable assignments.",
-        questions: [
-            {
-                questionText: "Which keyword is used to declare a block-scoped variable that cannot be reassigned?",
-                options: ["var", "let", "const", "make"],
-                correctAnswer: "const"
-            },
-            {
-                questionText: "What is the output of typeof null in JavaScript?",
-                options: ["'null'", "'undefined'", "'object'", "'string'"],
-                correctAnswer: "'object'"
-            },
-            {
-                questionText: "Which function is used to parse a JSON string into a JavaScript object?",
-                options: ["JSON.stringify()", "JSON.parse()", "Object.parse()", "JSON.toObject()"],
-                correctAnswer: "JSON.parse()"
-            }
-        ]
-    }
-];
-
-// Synchronize quizzes from questions.json to mock DB
-try {
-    const questionsPath = path.join(__dirname, "../../frontend/src/components/Quiz/questions.json");
-    if (fs.existsSync(questionsPath)) {
-        const fileContent = fs.readFileSync(questionsPath, "utf8");
-        const parsed = JSON.parse(fileContent);
-        if (parsed.quizzes && Array.isArray(parsed.quizzes)) {
-            parsed.quizzes.forEach((q) => {
-                const qId = q.subject.toLowerCase();
-                if (!mockQuizzes.some(mq => mq.quizId === qId)) {
-                    mockQuizzes.push({
-                        quizId: qId,
-                        title: q.subject,
-                        description: `Test your knowledge in ${q.subject}`,
-                        questions: q.questions.map((quest) => ({
-                            questionText: quest.question,
-                            options: quest.options,
-                            correctAnswer: quest.correct_answer
-                        }))
-                    });
-                }
-            });
-            console.log(`[MOCK DYNAMODB] Loaded ${parsed.quizzes.length} subjects from frontend questions.json`);
-        }
-    }
-} catch (err) {
-    console.warn("[MOCK DYNAMODB] Failed to load external questions.json in backend:", err.message);
-}
+// Load table names from environment variables with fallback defaults
+const USERS_TABLE = process.env.USERS_TABLE || "Users";
+const QUIZZES_TABLE = process.env.QUIZZES_TABLE || "Quizzes";
+const RESULTS_TABLE = process.env.RESULTS_TABLE || "Results";
 
 /**
- * Save user metadata in mock Users database.
- * @param {string} userId - Cognito Sub UUID.
+ * Helper to normalize quizId. Ensures it is prefixed with "quiz-" to match database structure.
+ * E.g., "math" -> "quiz-math", "quiz-physics" -> "quiz-physics"
+ */
+const normalizeQuizId = (quizId) => {
+    if (!quizId) return "";
+    return quizId.startsWith("quiz-") ? quizId : `quiz-${quizId}`;
+};
+
+/**
+ * Save user metadata in the Users table.
+ * @param {string} userId - The Cognito sub ID.
  * @param {string} username - User username.
  * @param {string} email - User email address.
  */
 const saveUser = async (userId, username, email) => {
-    await new Promise(resolve => setTimeout(resolve, 100)); // Latency simulation
-    
-    const userRecord = {
-        userId,
-        username,
-        email,
-        createdAt: new Date().toISOString()
+    const params = {
+        TableName: USERS_TABLE,
+        Item: {
+            userId,
+            username,
+            email,
+            createdAt: new Date().toISOString()
+        }
     };
-    
-    mockUsers.push(userRecord);
-    console.log(`[MOCK DYNAMODB] Saved user record:`, userRecord);
+
+    try {
+        console.log(`[DYNAMODB SDK] Saving user ${userId} to table ${USERS_TABLE}...`);
+        const command = new PutCommand(params);
+        await dynamoDbDocumentClient.send(command);
+        console.log(`[DYNAMODB SDK] Successfully saved user ${userId}`);
+    } catch (error) {
+        console.error("DynamoDB saveUser Error:", error);
+        throw error;
+    }
 };
 
 /**
- * Fetch all mock quizzes.
- * @returns {Promise<Array>} List of quizzes.
+ * Scan the Quizzes table to fetch all quizzes.
+ * @returns {Promise<Array>} Array of quizzes.
  */
 const fetchQuizzes = async () => {
-    await new Promise(resolve => setTimeout(resolve, 100));
-    return mockQuizzes;
-};
-
-/**
- * Fetch mock quiz by ID.
- * @param {string} quizId - ID of the quiz.
- * @returns {Promise<object|null>} Quiz object or null.
- */
-const fetchQuizById = async (quizId) => {
-    await new Promise(resolve => setTimeout(resolve, 100));
-    const quiz = mockQuizzes.find(q => q.quizId === quizId);
-    return quiz || null;
-};
-
-/**
- * Save score and response results in mock Results database.
- * @param {string} userId - User identifier (Cognito sub).
- * @param {string} quizId - ID of the quiz taken.
- * @param {number} score - Scored answers count.
- * @param {number} totalQuestions - Questions count.
- * @param {Array} answers - User submitted answers.
- * @returns {Promise<object>} The stored results record.
- */
-const saveResult = async (userId, quizId, score, totalQuestions, answers) => {
-    await new Promise(resolve => setTimeout(resolve, 100));
-    
-    const resultItem = {
-        userId,
-        timestamp: new Date().toISOString(),
-        quizId,
-        score,
-        totalQuestions,
-        answers
+    const params = {
+        TableName: QUIZZES_TABLE
     };
 
-    mockResults.push(resultItem);
-    console.log(`[MOCK DYNAMODB] Stored quiz result:`, resultItem);
-    return resultItem;
+    try {
+        console.log(`[DYNAMODB SDK] Scanning table ${QUIZZES_TABLE}...`);
+        const command = new ScanCommand(params);
+        const response = await dynamoDbDocumentClient.send(command);
+        return response.Items || [];
+    } catch (error) {
+        console.error("DynamoDB fetchQuizzes Error:", error);
+        throw error;
+    }
 };
 
 /**
- * Query results history by userId (sorted descending by timestamp).
- * @param {string} userId - User identifier.
- * @returns {Promise<Array>} Chronological list of user results.
+ * Fetch a single quiz details by ID.
+ * @param {string} quizId - Unique identifier of the quiz.
+ * @returns {Promise<object|null>} Quiz object or null if not found.
+ */
+const fetchQuizById = async (quizId) => {
+    const dbQuizId = normalizeQuizId(quizId);
+    const params = {
+        TableName: QUIZZES_TABLE,
+        Key: {
+            quizId: dbQuizId
+        }
+    };
+
+    try {
+        console.log(`[DYNAMODB SDK] Getting item from ${QUIZZES_TABLE} with quizId: ${dbQuizId}...`);
+        const command = new GetCommand(params);
+        const response = await dynamoDbDocumentClient.send(command);
+        return response.Item || null;
+    } catch (error) {
+        console.error(`DynamoDB fetchQuizById Error for ID ${dbQuizId}:`, error);
+        throw error;
+    }
+};
+
+/**
+ * Save the calculated quiz score and user answers to the Results table.
+ * @param {string} userId - Cognito unique identifier (sub).
+ * @param {string} quizId - ID of the quiz taken.
+ * @param {number} score - Score returned by Lambda.
+ * @param {number} totalQuestions - Total count of questions.
+ * @param {Array} answers - User submitted answers list.
+ * @returns {Promise<object>} The stored result object.
+ */
+const saveResult = async (userId, quizId, score, totalQuestions, answers) => {
+    const dbQuizId = normalizeQuizId(quizId);
+    const timestamp = new Date().toISOString();
+    const resultItem = {
+        userId,
+        quizId: dbQuizId, // Sort key
+        score,
+        totalQuestions,
+        answers,
+        timestamp
+    };
+
+    const params = {
+        TableName: RESULTS_TABLE,
+        Item: resultItem
+    };
+
+    try {
+        console.log(`[DYNAMODB SDK] Saving quiz result to ${RESULTS_TABLE} for user: ${userId}, quiz: ${dbQuizId}`);
+        const command = new PutCommand(params);
+        await dynamoDbDocumentClient.send(command);
+        return resultItem;
+    } catch (error) {
+        console.error("DynamoDB saveResult Error:", error);
+        throw error;
+    }
+};
+
+/**
+ * Retrieve past results for a specific user, sorted from newest to oldest.
+ * @param {string} userId - Cognito User ID (sub).
+ * @returns {Promise<Array>} List of past quiz results.
  */
 const fetchResultsByUser = async (userId) => {
-    await new Promise(resolve => setTimeout(resolve, 100));
-    
-    // Filter and sort descending by timestamp string
-    const results = mockResults
-        .filter(r => r.userId === userId)
-        .sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+    const params = {
+        TableName: RESULTS_TABLE,
+        KeyConditionExpression: "userId = :userId",
+        ExpressionAttributeValues: {
+            ":userId": userId
+        }
+    };
+
+    try {
+        console.log(`[DYNAMODB SDK] Querying ${RESULTS_TABLE} for user: ${userId}`);
+        const command = new QueryCommand(params);
+        const response = await dynamoDbDocumentClient.send(command);
         
-    return results;
+        // Sort descending in Javascript since we sort by timestamp which is not the Sort Key (the sort key is quizId)
+        const items = response.Items || [];
+        return items.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+    } catch (error) {
+        console.error(`DynamoDB fetchResultsByUser Error for user ${userId}:`, error);
+        throw error;
+    }
 };
 
 module.exports = {
@@ -175,7 +165,5 @@ module.exports = {
     fetchQuizzes,
     fetchQuizById,
     saveResult,
-    fetchResultsByUser,
-    _mockUsers: mockUsers,       // Exported for debug/introspection
-    _mockResults: mockResults    // Exported for debug/introspection
+    fetchResultsByUser
 };

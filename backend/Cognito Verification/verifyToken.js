@@ -1,16 +1,56 @@
 /**
- * Cognito Verification/verifyToken.js (MOCK IMPLEMENTATION)
- * Description: Express middleware that validates local JWT tokens instead of AWS Cognito tokens.
- * Decodes the JWT using standard jsonwebtoken and attaches mock user context to the request.
+ * Cognito Verification/verifyToken.js
+ * Description: Express middleware that intercepts incoming protected HTTP requests.
+ * Extracts the JWT token from the Authorization header, verifies it with Cognito using aws-jwt-verify,
+ * and attaches the decoded user payload to the request object.
+ * 
+ * Note: Instantiation is lazy-loaded to prevent Node server crashes during startup
+ * if Cognito configuration is missing in the environment.
+ * Custom responseTimeout is set to 10 seconds to accommodate slower local networks.
  */
 
-const jwt = require("jsonwebtoken");
+const { CognitoJwtVerifier } = require("aws-jwt-verify");
+const { SimpleJwksCache } = require("aws-jwt-verify/jwk");
+const { SimpleJsonFetcher } = require("aws-jwt-verify/https");
 
-// Use standard local secret (matches cognitoService.js secret)
-const MOCK_JWT_SECRET = process.env.JWT_SECRET || "local-super-secret-key";
+let verifierInstance = null;
 
 /**
- * Middleware function to verify the Authorization Bearer Token locally.
+ * Lazy helper to retrieve the Cognito JWT Verifier instance.
+ * Instantiates the verifier on first request to prevent crashes on startup.
+ */
+const getVerifier = () => {
+    if (!verifierInstance) {
+        const userPoolId = process.env.COGNITO_USER_POOL_ID;
+        const clientId = process.env.COGNITO_CLIENT_ID;
+
+        if (!userPoolId || !clientId) {
+            throw new Error("Cognito Configuration Error: COGNITO_USER_POOL_ID and COGNITO_CLIENT_ID must be set in environment variables.");
+        }
+
+        // Initialize verifier instance with custom 10-second response timeout
+        verifierInstance = CognitoJwtVerifier.create(
+            {
+                userPoolId: userPoolId,
+                clientId: clientId,
+                tokenUse: "id" // Verifies Cognito ID token
+            },
+            {
+                jwksCache: new SimpleJwksCache({
+                    fetcher: new SimpleJsonFetcher({
+                        defaultRequestOptions: {
+                            responseTimeout: 10000 // 10 seconds timeout
+                        }
+                    })
+                })
+            }
+        );
+    }
+    return verifierInstance;
+};
+
+/**
+ * Middleware function to verify the Authorization Bearer Token.
  */
 const verifyToken = async (req, res, next) => {
     try {
@@ -26,24 +66,35 @@ const verifyToken = async (req, res, next) => {
         // Robust extraction: remove "Bearer" (case-insensitive) and all subsequent whitespace
         const token = authHeader.replace(/^Bearer\s+/i, "").trim();
 
-        console.log(`[MOCK VERIFICATION] Verifying token of length: ${token.length}`);
+        // Retrieve verifier (initializes if first run, throws if unconfigured)
+        const verifier = getVerifier();
 
-        // Verify local token
-        const payload = jwt.verify(token, MOCK_JWT_SECRET);
+        // Verify token with Cognito pool
+        const payload = await verifier.verify(token);
 
-        // Attach claims to request context to simulate Cognito User context
+        // Attach Cognito claims to standard req.user context
         req.user = {
-            userId: payload.sub, // Simulated Cognito sub
+            userId: payload.sub, // Cognito User ID (sub)
             email: payload.email,
-            username: payload.preferred_username || "anonymous"
+            username: payload["cognito:username"] || payload.preferred_username || payload.username || "anonymous"
         };
 
         next();
     } catch (error) {
-        console.error("[MOCK VERIFICATION] Token validation failed:", error.message || error);
+        console.error("[COGNITO VERIFICATION] Token validation failed:", error.message || error);
+
+        // Handle specific configuration errors differently
+        if (error.message && error.message.includes("Cognito Configuration Error")) {
+            return res.status(500).json({
+                status: "error",
+                message: "Server Configuration Error: Auth service is improperly configured.",
+                details: error.message
+            });
+        }
+
         return res.status(401).json({
             status: "error",
-            message: "Unauthorized access: Invalid or expired token.",
+            message: "Unauthorized access: Invalid, expired, or tampered token.",
             details: error.message
         });
     }
